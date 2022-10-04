@@ -78,6 +78,10 @@ const [setup, use] = useInjectionState(() => {
     return ['mysql', ClientType.MYSQL].includes(getBaseType(baseId))
   }
 
+  function isOracle(baseId?: string) {
+    return getBaseType(baseId) === 'oracledb'
+  }
+
   function isMssql(baseId?: string) {
     return getBaseType(baseId) === 'mssql'
   }
@@ -188,6 +192,7 @@ const [setup, use] = useInjectionState(() => {
     loadTables,
     isMysql,
     isMssql,
+    isOracle,
     isPg,
     sqlUis,
     isSharedBase,
