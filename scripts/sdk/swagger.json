@@ -9949,14 +9949,15 @@
           "dtx": {
             "type": "string"
           },
-          "dtxp": { "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "dtxp": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "dtxs": {
             "oneOf": [
@@ -9966,7 +9967,7 @@
               {
                 "type": "null"
               }
-              ]
+            ]
           },
           "au": {
             "type": "boolean"
@@ -10134,6 +10135,38 @@
             "type": "string"
           },
           "roles": {}
+        }
+      },
+      "VisibilityRuleReq": {
+        "title": "Visibility Rule",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "disabled": {
+              "type": "object",
+              "properties": {
+                "commenter": {
+                  "type": "boolean"
+                },
+                "creator": {
+                  "type": "boolean"
+                },
+                "editor": {
+                  "type": "boolean"
+                },
+                "guest": {
+                  "type": "boolean"
+                },
+                "owner": {
+                  "type": "boolean"
+                },
+                "viewer": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
         }
       }
     },
