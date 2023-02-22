@@ -172,7 +172,7 @@ const addNewRow = () => {
       rowMeta: { new: true },
     }
     isExpanded.value = true
-  }, 500);
+  }, 500)
 }
 
 // attach keyboard listeners to switch between rows
@@ -194,7 +194,7 @@ useActiveKeyupListener(
       document.activeElement?.blur()
 
       e.stopPropagation()
-      e.preventDefault()
+
       if (isNew.value) {
         const data = await save(rowState.value)
         await syncLTARRefs(data)
@@ -208,12 +208,8 @@ useActiveKeyupListener(
       }
       // on alt + n create new record
     } else if (e.code === 'KeyN') {
-
-      // remove focus from the active input if any
-      document.activeElement?.blur()
-
-      e.stopPropagation()
-      e.preventDefault()
+      // remove focus from the active input if any to avoid unwanted input
+      ;(document.activeElement as HTMLInputElement)?.blur?.()
 
       if (changedColumns.value.size > 0) {
         await Modal.confirm({
@@ -230,7 +226,7 @@ useActiveKeyupListener(
           },
         })
       } else if (isNew.value) {
-         await Modal.confirm({
+        await Modal.confirm({
           title: 'Do you want to save the record?',
           okText: 'Save',
           cancelText: 'Discard',
@@ -247,7 +243,6 @@ useActiveKeyupListener(
       } else {
         addNewRow()
       }
-
     }
   },
   { immediate: true },
@@ -276,7 +271,7 @@ export default {
       <div class="flex h-full nc-form-wrapper items-stretch min-h-[max(70vh,100%)]">
         <div class="flex-1 overflow-auto scrollbar-thin-dull nc-form-fields-container relative">
           <template v-if="props.showNextPrevIcons">
-            <a-tooltip placement="bottom" v-if="!props.firstRow">
+            <a-tooltip v-if="!props.firstRow" placement="bottom">
               <template #title>
                 {{ $t('labels.prevRow') }}
 
@@ -285,7 +280,7 @@ export default {
               <MdiChevronLeft class="cursor-pointer nc-prev-arrow" @click="$emit('prev')" />
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="!props.lastRow">
+            <a-tooltip v-if="!props.lastRow" placement="bottom">
               <template #title>
                 {{ $t('labels.nextRow') }}
                 <GeneralShortcutLabel class="justify-center" :keys="['Alt', '→']" />
@@ -314,8 +309,7 @@ export default {
                 :ref="i ? null : (el) => (cellWrapperEl = el)"
                 class="!bg-white rounded px-1 min-h-[35px] flex items-center mt-2 relative"
               >
-                <LazySmartsheetVirtualCell v-if="isVirtualCol(col)" v-model="row.row[col.title]" :row="row"
-                                           :column="col" />
+                <LazySmartsheetVirtualCell v-if="isVirtualCol(col)" v-model="row.row[col.title]" :row="row" :column="col" />
 
                 <LazySmartsheetCell
                   v-else
