@@ -21,6 +21,7 @@ import {
   useVModel,
   watch,
 } from '#imports'
+import { useActiveKeyupListener } from '~/composables/useSelectedCellKeyupListener'
 import type { Row } from '~/lib'
 
 interface Props {
@@ -151,6 +152,24 @@ onMounted(() => {
     ;(cellWrapperEl.value?.querySelector('input,select,textarea') as HTMLInputElement)?.focus()
   })
 })
+
+// attach keyboard listeners to switch between rows
+// using alt + left/right arrow keys
+useActiveKeyupListener(
+  isExpanded,
+  (e: KeyboardEvent) => {
+    if (!e.altKey) return
+
+    if (e.key === 'ArrowLeft') {
+      e.stopPropagation()
+      emits('prev')
+    } else if (e.key === 'ArrowRight') {
+      e.stopPropagation()
+      emits('next')
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <script lang="ts">
