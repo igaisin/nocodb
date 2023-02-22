@@ -188,6 +188,9 @@ useActiveKeyupListener(
     }
     // on alt + s save record
     else if (e.code === 'KeyS') {
+      // remove focus from the active input if any
+      document.activeElement?.blur()
+
       e.stopPropagation()
       e.preventDefault()
       if (isNew.value) {
@@ -203,6 +206,10 @@ useActiveKeyupListener(
       }
       // on alt + n create new record
     } else if (e.code === 'KeyN') {
+
+      // remove focus from the active input if any
+      document.activeElement?.blur()
+
       e.stopPropagation()
       e.preventDefault()
 
